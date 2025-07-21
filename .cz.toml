@@ -1,7 +1,111 @@
 [tool.commitizen]
-name = "cz_conventional_commits"
+name = "cz_customize"
 tag_format = "$version"
 version_scheme = "semver"
-version = "0.0.1"
+version = "0.1.0"
 update_changelog_on_bump = true
 major_version_zero = true
+version_files = [
+    ".cz.toml:version",
+    "package.json:version",
+    "README.MD:version",
+]
+style = [
+    [
+        "qmark",
+        "fg:#ff9d00 bold",
+    ],
+    [
+        "question",
+        "bold",
+    ],
+    [
+        "answer",
+        "fg:#ff9d00 bold",
+    ],
+    [
+        "pointer",
+        "fg:#ff9d00 bold",
+    ],
+    [
+        "highlighted",
+        "fg:#ff9d00 bold",
+    ],
+    [
+        "selected",
+        "fg:#cc5454",
+    ],
+    [
+        "separator",
+        "fg:#cc5454",
+    ],
+    [
+        "instruction",
+        "",
+    ],
+    [
+        "text",
+        "",
+    ],
+    [
+        "disabled",
+        "fg:#858585 italic",
+    ],
+]
+
+[tool.commitizen.customize]
+message_template = "{{change_type}}: (PREC-{{issue_key}}) {{message}} {%if workflow_transition %} #{{workflow_transition_stage}} {% endif %}"
+schema = "<type>: <body>"
+schema_pattern = "(feature|fix|doc|refactor|ci|test|build):(\\s.*)"
+bump_pattern = "^(break|feature|fix|hotfix|refactor)"
+bump_map = { "break" = "MAJOR", "feature" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH" }
+change_type_order = ["BREAKING CHANGE", "feature", "fix", "refactor", "perf"]
+commit_parser = "^(?P<change_type>feature|fix|doc|refactor|ci|test|build):\\s(?P<message>.*)?"
+changelog_pattern = "^(feature|fix|doc|refactor|ci|test|build)?(!)?"
+change_type_map = { "feature" = "Feat", "fix" = "fix", "doc" = "Doc", "refactor" = "Refactor" }
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "change_type"
+choices = [
+    { value = "feature", name = "feature: Um novo recurso. Correlaciona-se com MINOR no SemVer." },
+    { value = "fix", name = "fix: Uma correção de bug. Correlaciona-se com PATCH no SemVer." },
+    { value = "hotfix", name = "hotfix: Uma correção de bug no ambiente de produção. Correlaciona-se com PATCH no SemVer." },
+    { value = "doc", name = "doc: Alterações apenas na documentação." },
+    { value = "refactor", name = "refactor: Uma mudança de código que não corrige um bug nem adiciona um recurso." },
+    { value = "test", name = "test: Adicionando testes ausentes ou corrigindo testes existentes." },
+    { value = "build", name = "build: Mudanças que afetam o sistema de construção ou dependências externas (exemplos de escopos: pip, docker, npm)." },
+    { value = "ci", name = "ci: Mudanças nos arquivos de configuração CI e scripts (exemplos de escopos: GitLabCI)." },
+    { value = "chore", name = "chore: Significa nada que um usuário externo veria." },
+]
+message = "Selecione o tipo de mudanção que você está committando"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Comentário:"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "issue_key"
+message = "Issue do Jira (apenas o número)"
+
+[[tool.commitizen.customize.questions]]
+type = "confirm"
+name = "workflow_transition"
+message = "Houve alguma transição de fluxo de trabalho?"
+default = "Y"
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "workflow_transition_stage"
+choices = [
+    { value = "", name = "Não houve transição de fluxo de trabalho" },
+    { value = "REFINAMENTO", name = "REFINAMENTO: a tarefa ou história de usuário está sendo preparada antes de ser desenvolvida" },
+    { value = "A_FAZER", name = "A_FAZER: aguardando que alguém execute" },
+    { value = "DESENVOLVIMENTO", name = "DESENVOLVIMENTO: a tarefa está em execução" },
+    { value = "REVISAO", name = "REVISAO: a tarefa foi concluída e pendente de aprovação" },
+    { value = "FINALIZADO", name = "FINALIZADO: a tarefa foi aprovada" },
+]
+message = "Selecione a transição de fluxo de trabalho:"
+
