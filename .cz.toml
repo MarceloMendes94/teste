@@ -54,7 +54,7 @@ style = [
 ]
 
 [tool.commitizen.customize]
-message_template = "{{change_type}}: (PREC-{{issue_key}}) {{message}} {%if workflow_transition %} #{{workflow_transition_stage}} {% endif %}"
+message_template = "{{change_type}}: (KAN-{{issue_key}}) {{message}} {%if workflow_transition %} #{{workflow_transition_stage}} {% endif %}"
 schema = "<type>: <body>"
 schema_pattern = "(feature|fix|doc|refactor|ci|test|build):(\\s.*)"
 bump_pattern = "^(break|feature|fix|hotfix|refactor)"
@@ -101,11 +101,8 @@ type = "list"
 name = "workflow_transition_stage"
 choices = [
     { value = "", name = "Não houve transição de fluxo de trabalho" },
-    { value = "REFINAMENTO", name = "REFINAMENTO: a tarefa ou história de usuário está sendo preparada antes de ser desenvolvida" },
-    { value = "A_FAZER", name = "A_FAZER: aguardando que alguém execute" },
-    { value = "DESENVOLVIMENTO", name = "DESENVOLVIMENTO: a tarefa está em execução" },
-    { value = "REVISAO", name = "REVISAO: a tarefa foi concluída e pendente de aprovação" },
-    { value = "FINALIZADO", name = "FINALIZADO: a tarefa foi aprovada" },
+    { value = "A FAZER", name = "REFINAMENTO: a tarefa ou história de usuário está sendo preparada antes de ser desenvolvida" },
+    { value = "EM ANDAMENTO", name = "EM ANDAMENTO: atividade em progresso" },
+    { value = "ENTREGUE", name = "ENTREGUE: a tarefa está foi finalizada" },
 ]
 message = "Selecione a transição de fluxo de trabalho:"
-
